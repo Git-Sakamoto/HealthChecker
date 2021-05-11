@@ -4,7 +4,7 @@ require "../../../Class/DatabaseManager.php";
 $databaseManager = new DatabaseManager();
 
 //編集機能で使用
-unset($_SESSION['afterInfoArray']);
+unset($_SESSION['afterInfo']);
 ?>
 <html>
 <head>

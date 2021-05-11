@@ -244,7 +244,7 @@ class DatabaseManager
         return $sth->execute();
     }
 
-    public function updateFoodCategory($categoryId, $categoryName)
+    public function updateFoodCategory($beforeCategoryId, $afterCategoryId, $categoryName)
     {
         $sql = "
         UPDATE $this->food_category_table
@@ -255,13 +255,14 @@ class DatabaseManager
         $dbh = $this->openDB();
         $sth = $dbh->prepare($sql);
         
-        $sth->bindValue(1,$categoryId);
+        $sth->bindValue(1,$afterCategoryId);
         $sth->bindValue(2,$categoryName);
+        $sth->bindValue(3,$beforeCategoryId);
         
         return $sth->execute();
     }
 
-    public function updateFoodTableCategoryId($categoryId)
+    public function updateFoodTableCategoryId($beforeCategoryId, $afterCategoryId)
     {
         $sql = "
         UPDATE $this->food_table
@@ -272,8 +273,8 @@ class DatabaseManager
         $dbh = $this->openDB();
         $sth = $dbh->prepare($sql);
         
-        $sth->bindValue(1,$categoryId);
-        $sth->bindValue(2,$categoryId);
+        $sth->bindValue(1,$afterCategoryId);
+        $sth->bindValue(2,$beforeCategoryId);
         
         return $sth->execute();
     }
