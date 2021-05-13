@@ -23,6 +23,7 @@ class DatabaseManager
 
     //foodテーブル
     public $food_table = 'food';
+    public $food_food_id = 'food_id';
     public $food_category_id = 'category_id';
     public $food_name = 'name'; //食品名
     public $food_kcal = 'kcal'; //100gあたりのカロリー
@@ -304,7 +305,7 @@ class DatabaseManager
     public function selectAllFood()
     {
         $sql = "
-        SELECT food_category.category_name, food.name, food.kcal, food.protein
+        SELECT food.food_id, food_category.category_name, food.name, food.kcal, food.protein
         FROM food
         INNER JOIN food_category
         USING ( category_id )
