@@ -305,7 +305,7 @@ class DatabaseManager
     public function selectAllFood()
     {
         $sql = "
-        SELECT food.food_id, food_category.category_name, food.name, food.kcal, food.protein
+        SELECT food_category.category_name, food.food_id, food.name, food.kcal, food.protein
         FROM food
         INNER JOIN food_category
         USING ( category_id )
@@ -315,6 +315,24 @@ class DatabaseManager
         $sth = $dbh->prepare($sql);
         $sth->execute();
         return $sth;
+    }
+
+    public function insertFood($categoryId, $name, $kcal, $protein)
+    {
+        $sql = "
+        INSERT INTO $this->food_table ($this->food_category_id, $this->food_name, $this->food_kcal, $this->food_protein)
+        VALUES(?,?,?,?)
+        ";
+        
+        $dbh = $this->openDB();
+        $sth = $dbh->prepare($sql);
+        
+        $sth->bindValue(1,$categoryId);
+        $sth->bindValue(2,$name);
+        $sth->bindValue(3,$kcal);
+        $sth->bindValue(4,$protein);
+        
+        return $sth->execute();
     }
 
     public function userSearch($userName, $password)
