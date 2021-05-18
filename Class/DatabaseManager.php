@@ -317,6 +317,24 @@ class DatabaseManager
         return $sth;
     }
 
+    public function selectFood($foodId)
+    {
+        $sql = "
+        SELECT food.food_id, food_category.category_name, food.name, food.kcal, food.protein
+        FROM food
+        INNER JOIN food_category
+        USING ( category_id )
+        WHERE food.food_id = ?
+        ";
+        $dbh = $this->openDB();
+        $sth = $dbh->prepare($sql);
+
+        $sth->bindValue(1,$foodId);
+
+        $sth->execute();
+        return $sth->fetch(PDO::FETCH_ASSOC);
+    }
+
     public function insertFood($categoryId, $name, $kcal, $protein)
     {
         $sql = "
@@ -331,6 +349,21 @@ class DatabaseManager
         $sth->bindValue(2,$name);
         $sth->bindValue(3,$kcal);
         $sth->bindValue(4,$protein);
+        
+        return $sth->execute();
+    }
+
+    public function deleteFood($foodId)
+    {
+        $sql = "
+        DELETE FROM $this->food_table
+        WHERE $this->food_food_id = ?
+        ";
+        
+        $dbh = $this->openDB();
+        $sth = $dbh->prepare($sql);
+        
+        $sth->bindValue(1,$foodId);
         
         return $sth->execute();
     }

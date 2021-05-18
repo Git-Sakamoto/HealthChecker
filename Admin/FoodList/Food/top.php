@@ -47,8 +47,8 @@ unset($_SESSION['afterInfo']);
                                 <td><?php echo $food['kcal']; ?>kcal</td>
                                 <td><?php echo $food['protein']; ?>g</td>
                                 <td>
-                                    <button class="btn btn-outline-primary" type="submit" formaction="Edit/input.php" name="categoryId" value="<?php echo $food['food_id']; ?>">編集</button>
-                                    <button class="btn btn-outline-primary" type="submit" formaction="Delete/confirm.php" name="categoryId" value="<?php echo $food['food_id']; ?>">削除</button>
+                                    <button class="btn btn-outline-primary" type="submit" formaction="Edit/input.php" name="foodId" value="<?php echo $food['food_id']; ?>">編集</button>
+                                    <button class="btn btn-outline-primary" type="submit" formaction="Delete/confirm.php" name="foodId" value="<?php echo $food['food_id']; ?>">削除</button>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
