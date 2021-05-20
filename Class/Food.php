@@ -20,7 +20,7 @@ class Food
     {
         return $this->foodId;
     }
-
+    
     public function getCategoryName()
     {
         return $this->categoryName;

@@ -37,7 +37,7 @@ unset($_SESSION["token"]);
                 ?>
                     
                 <p>
-                <?php if($databaseManager->deleteFood($foodId) > 0) : ?>
+                <?php if($databaseManager->deleteFood($foodId)) : ?>
                     <b>以下の情報の削除に成功しました</b>
                 <?php else : ?>
                     <b>以下の情報の削除に失敗しました</b>
