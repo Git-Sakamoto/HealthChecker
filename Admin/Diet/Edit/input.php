@@ -55,38 +55,20 @@ if($_POST['id'] == 'multiple'){
                     運動強度（METs）：<?php echo $mets; ?>
                     </p>
                     
-                    <?php if(isset($_SESSION['afterInfoArray'])) : ?>
-                        <?php $action = unserialize($afterInfo[$formCount-1]); ?>
-                        <p>
-                        <b>更新後</b>
-                        <br>
-                        行動：
-                        <input type="text" name="afterNameArray[]" value="<?php echo $action->getName(); ?>" required>
-                        </p>
-                        <p>
-                        1回あたりの時間（分）：
-                        <input type="number" step="1" name="afterTimeArray[]" value="<?php echo $action->getTime(); ?>" required>
-                        </p>
-                        <p>
-                        運動強度（METs）：
-                        <input type="number" step="0.1" name="afterMetsArray[]" value="<?php echo $action->getMets(); ?>" required>
-                        </p>
-                    <?php else : ?>
-                        <p>
-                        <b>更新後</b>
-                        <br>
-                        行動：
-                        <input type="text" name="afterNameArray[]" value="<?php echo $name; ?>" required>
-                        </p>
-                        <p>
-                        1回あたりの時間（分）：
-                        <input type="number" step="1" name="afterTimeArray[]" value="<?php echo $time; ?>" required>
-                        </p>
-                        <p>
-                        運動強度（METs）：
-                        <input type="number" step="0.1" name="afterMetsArray[]" value="<?php echo $mets; ?>" required>
-                        </p>
-                    <?php endif; ?>
+                    <p>
+                    <b>更新後</b>
+                    <br>
+                    行動：
+                    <input type="text" name="afterNameArray[]" value="<?php echo $name; ?>" required>
+                    </p>
+                    <p>
+                    1回あたりの時間（分）：
+                    <input type="number" step="1" name="afterTimeArray[]" value="<?php echo $time; ?>" required>
+                    </p>
+                    <p>
+                    運動強度（METs）：
+                    <input type="number" step="0.1" name="afterMetsArray[]" value="<?php echo $mets; ?>" required>
+                    </p>
                 <?php else : ?>
                     <p>情報を取得できませんでした</p>
                 <?php endif; ?>

@@ -36,32 +36,18 @@ $databaseManager = new DatabaseManager();
                 カテゴリー名：<?php echo $categoryName; ?>
                 </p>
                     
-                <?php if(isset($_SESSION['afterInfo'])) : ?>
-                    <?php $afterInfo = unserialize($_SESSION['afterInfo']); ?>
-                    <p>
-                    <b>更新後</b>
-                    <br>
-                    カテゴリーID：
-                    <input type="text" pattern="^[a-z]+$" name="afterCategoryId" value="<?php echo $afterInfo->getCategoryId(); ?>" required>
-                    </p>
+                <p>
+                <b>更新後</b>
+                <br>
+                カテゴリーID（半角小文字アルファベット）：
+                <input type="text" pattern="^[a-z]+$" name="afterCategoryId" value="<?php echo $categoryId; ?>" required>
+                </p>
                     
-                    <p>
-                    カテゴリー名：
-                    <input type="text" name="afterCategoryName" value="<?php echo $afterInfo->getCategoryName(); ?>" required>
-                    </p>
-                <?php else : ?>
-                    <p>
-                    <b>更新後</b>
-                    <br>
-                    カテゴリーID（半角小文字アルファベット）：
-                    <input type="text" pattern="^[a-z]+$" name="afterCategoryId" value="<?php echo $categoryId; ?>" required>
-                    </p>
-                    
-                    <p>
-                    カテゴリー名：
-                    <input type="text" name="afterCategoryName" value="<?php echo $categoryName; ?>" required>
-                    </p>
-                <?php endif; ?>
+                <p>
+                カテゴリー名：
+                <input type="text" name="afterCategoryName" value="<?php echo $categoryName; ?>" required>
+                </p>
+                
                 <button class="btn btn-outline-primary" type="button" onclick="location.href='../top.php'">戻る</button>
                 <input class="btn btn-outline-primary" type="submit" value="更新"">
             <?php else : ?>

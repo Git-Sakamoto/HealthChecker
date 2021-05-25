@@ -2,9 +2,6 @@
 require '../auth.php';
 require "../../Class/DatabaseManager.php";
 $databaseManager = new DatabaseManager();
-
-//編集機能で使用
-unset($_SESSION['afterInfoArray']);
 ?>
 <html>
 <head>

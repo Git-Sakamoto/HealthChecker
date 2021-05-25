@@ -58,40 +58,21 @@ if($_POST['levelId'] == 'multiple'){
                     変更前の最大摂取たんぱく質量：<?php echo $max; ?>g
                     </p>
                     
-                    <?php if(isset($_SESSION['afterInfoArray'])) : ?>
-                        <?php $afterInfo = unserialize($afterInfo[$formCount-1]); ?>
-                        <p>
-                        <b>更新後</b>
-                        運動レベル名：
-                        <input type="text" name="afterLevelNameArray[]" value="<?php echo $afterInfo->getLevel(); ?>" required>
-                        </p>
-                        <p>
-                        最小摂取たんぱく質量：
-                        <input type="number" step="0.1" name="afterMinArray[]" value="<?php echo $afterInfo->getIntakeMin(); ?>" required>
-                        g
-                        </p>
-                        <p>
-                        最大摂取たんぱく質量：
-                        <input type="number" step="0.1" name="afterMaxArray[]" value="<?php echo $afterInfo->getIntakeMax(); ?>" required>
-                        g
-                        </p>
-                    <?php else : ?>
-                        <p>
-                        <b>更新後</b>
-                        運動レベル名：
-                        <input type="text" name="afterLevelNameArray[]" value="<?php echo $levelName; ?>" required>
-                        </p>
-                        <p>
-                        最小摂取たんぱく質量：
-                        <input type="number" step="0.1" name="afterMinArray[]" value="<?php echo $min; ?>" required>
-                        g
-                        </p>
-                        <p>
-                        最大摂取たんぱく質量：
-                        <input type="number" step="0.1" name="afterMaxArray[]" value="<?php echo $max; ?>" required>
-                        g
-                        </p>
-                    <?php endif; ?>
+                    <p>
+                    <b>更新後</b>
+                    運動レベル名：
+                    <input type="text" name="afterLevelNameArray[]" value="<?php echo $levelName; ?>" required>
+                    </p>
+                    <p>
+                    最小摂取たんぱく質量：
+                    <input type="number" step="0.1" name="afterMinArray[]" value="<?php echo $min; ?>" required>
+                    g
+                    </p>
+                    <p>
+                    最大摂取たんぱく質量：
+                    <input type="number" step="0.1" name="afterMaxArray[]" value="<?php echo $max; ?>" required>
+                    g
+                    </p>
                 <?php else : ?>
                     <p>レベルID：<?php echo $levelId; ?>の情報を取得できませんでした</p>
                 <?php endif; ?>
