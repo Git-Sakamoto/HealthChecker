@@ -22,12 +22,13 @@ $databaseManager = new DatabaseManager();
             <?php if($row = $databaseManager->selectFood($_POST['foodId'])) : ?>
                 <?php
                 $foodId = $_POST['foodId'];
+                $beforeCategoryId = $row[$databaseManager->food_category_id];
                 $beforeCategoryName = $row[$databaseManager->food_category_category_name];
                 $beforeFoodName = $row[$databaseManager->food_name];
                 $beforeKcal = $row[$databaseManager->food_kcal];
                 $beforeProtein = $row[$databaseManager->food_protein];
 
-                $beforeInfo = new Food($foodId, $categoryName, $foodName, $kcal, $protein);
+                $beforeInfo = new Food($foodId, $beforeCategoryId, $beforeCategoryName, $beforeFoodName, $beforeKcal, $beforeProtein);
                 $_SESSION['beforeInfo'] = serialize($beforeInfo);
                 ?>
                 
@@ -43,48 +44,45 @@ $databaseManager = new DatabaseManager();
                 たんぱく質：<?php echo $beforeProtein; ?>g
                 </p>
                     
-                <?php if(isset($_SESSION['afterInfo'])) : ?>
-                    <?php $afterInfo = unserialize($_SESSION['afterInfo']); ?>
-                    <p>
-                    <b>更新後</b>
-                    <br>
-                    カテゴリー：
-                    <select id="category" name="categoryId" onchange="setCategoryName()">
-                    <?php $result = $databaseManager->selectAllFoodCategory(); ?>
-                    <?php while($row = $result->fetch(PDO::FETCH_ASSOC)) : ?>
-                        <?php
-                        $categoryId = $row[$databaseManager->food_category_category_id];
-                        $categoryName = $row[$databaseManager->food_category_category_name];
-                        ?>
-                        
-                        <option value="<?php echo $categoryId; ?>">
-                        <?php echo $categoryName; ?>
-                        </option>
-                    <?php endwhile; ?>
-                    </select>
-                    </p>
-                <?php else : ?>
-                    <p>
-                    <b>更新後</b>
-                    <br>
-                    カテゴリー：
-                    <select id="category" name="categoryId" onchange="setCategoryName()">
-                    <?php $result = $databaseManager->selectAllFoodCategory(); ?>
-                    <?php while($row = $result->fetch(PDO::FETCH_ASSOC)) : ?>
-                        <?php
-                        $categoryId = $row[$databaseManager->food_category_category_id];
-                        $categoryName = $row[$databaseManager->food_category_category_name];
-                        ?>
-                        
-                        <option value="<?php echo $categoryId; ?>">
-                        <?php echo $categoryName; ?>
-                        </option>
-                    <?php endwhile; ?>
-                    </select>
-                    </p>
-                <?php endif; ?>
+                <p>
+                <b>更新後</b>
+                <br>
+                カテゴリー：
+                <select id="category" name="afterCategoryId" onchange="setCategoryName()">
+                <?php $result = $databaseManager->selectAllFoodCategory(); ?>
+                <?php while($row = $result->fetch(PDO::FETCH_ASSOC)) : ?>
+                    <?php
+                    $categoryId = $row[$databaseManager->food_category_category_id];
+                    $categoryName = $row[$databaseManager->food_category_category_name];
+                    ?>
+                    <option value="<?php echo $categoryId; ?>">
+                    <?php echo $categoryName; ?>
+                    </option>
+                <?php endwhile; ?>
+                </select>
+                </p>
+
+                <input type="hidden" name="afterCategoryName" value="">
+
+                <p>
+                食品名：
+                <input type="text" name="afterFoodName" value="<?php echo $beforeFoodName; ?>" required>
+                </p>
+
+                <p>
+                カロリー：
+                <input type="number" step="1" name="afterKcal" value="<?php echo $beforeKcal; ?>" required>
+                kcal
+                </p>
+
+                <p>
+                たんぱく質：
+                <input type="number" step="0.1" name="afterProtein" value="<?php echo $beforeProtein; ?>" required>
+                g
+                </p>
+                
                 <button class="btn btn-outline-primary" type="button" onclick="location.href='../top.php'">戻る</button>
-                <input class="btn btn-outline-primary" type="submit" value="更新"">
+                <input class="btn btn-outline-primary" type="submit" value="更新">
             <?php else : ?>
                 <p>情報を取得できませんでした</p>
                 <button class="btn btn-outline-primary" type="button" onclick="location.href='../top.php'">戻る</button>
@@ -94,15 +92,26 @@ $databaseManager = new DatabaseManager();
 </body>
 <script type="text/javascript">
 window.onload = function() {
-    selectCategory('<?php echo $beforeCategoryName ?>');
+    selectCategory('<?php echo $beforeCategoryId; ?>');
 };
 
-function selectCategory(category){
+function setCategoryName(){
+    var obj = document.getElementById('category');
+    var index = obj.selectedIndex;
+    var value = obj.options[index].value;
+    var text  = obj.options[index].text;
+
+    document.forms[0].afterCategoryName.value=text;
+}
+
+function selectCategory(categoryId){
     var select = document.forms[0].category;
  
 	for(var i=0; i < select.options.length; i++){
-		if(select.options[i].text === category){
+		if(select.options[i].value === categoryId){
 			select.options[i].selected = true;
+            
+            setCategoryName();
 		}
 	}
 }

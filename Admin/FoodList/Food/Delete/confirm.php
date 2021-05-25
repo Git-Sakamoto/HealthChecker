@@ -27,14 +27,15 @@ $_SESSION['token'] = $token;
         <?php $foodId = $_POST['foodId']; ?>
         <?php if($row = $databaseManager->selectFood($foodId)) : ?>
             <?php
+            $categoryId = $row[$databaseManager->food_category_id];
             $categoryName = $row[$databaseManager->food_category_category_name];
             $foodName = $row[$databaseManager->food_name];
             $kcal = $row[$databaseManager->food_kcal];
             $protein = $row[$databaseManager->food_protein];
 
-            $food = new Food($foodId, $categoryName, $foodName, $kcal, $protein);
+            $food = new Food($foodId, $categoryId, $categoryName, $foodName, $kcal, $protein);
             $_SESSION['food'] = serialize($food);
-            ?>  
+            ?>
             
             <p>
             カテゴリー：<?php echo $categoryName; ?>

@@ -320,7 +320,7 @@ class DatabaseManager
     public function selectFood($foodId)
     {
         $sql = "
-        SELECT food.food_id, food_category.category_name, food.name, food.kcal, food.protein
+        SELECT food.food_id, food.category_id, food_category.category_name, food.name, food.kcal, food.protein
         FROM food
         INNER JOIN food_category
         USING ( category_id )
@@ -349,6 +349,26 @@ class DatabaseManager
         $sth->bindValue(2,$name);
         $sth->bindValue(3,$kcal);
         $sth->bindValue(4,$protein);
+        
+        return $sth->execute();
+    }
+
+    public function updateFood($foodId, $categoryId, $foodName, $kcal, $protein)
+    {
+        $sql = "
+        UPDATE $this->food_table
+        SET $this->food_category_id = ?,$this->food_name = ?,$this->food_kcal = ?,$this->food_protein = ?
+        WHERE $this->food_food_id = ?
+        ";
+        
+        $dbh = $this->openDB();
+        $sth = $dbh->prepare($sql);
+        
+        $sth->bindValue(1,$categoryId);
+        $sth->bindValue(2,$foodName);
+        $sth->bindValue(3,$kcal);
+        $sth->bindValue(4,$protein);
+        $sth->bindValue(5,$foodId);
         
         return $sth->execute();
     }

@@ -2,14 +2,16 @@
 class Food
 {
     private $foodId;
+    private $categoryId;
     private $categoryName;
     private $foodName;
     private $kcal;
     private $protein;
 
-    public function __construct($foodId, $categoryName, $foodName, $kcal, $protein)
+    public function __construct($foodId, $categoryId, $categoryName, $foodName, $kcal, $protein)
     {
         $this->foodId = $foodId;
+        $this->categoryId = $categoryId;
         $this->categoryName = $categoryName;
         $this->foodName = $foodName;
         $this->kcal = $kcal;
@@ -21,6 +23,11 @@ class Food
         return $this->foodId;
     }
     
+    public function getCategoryId()
+    {
+        return $this->categoryId;
+    }
+
     public function getCategoryName()
     {
         return $this->categoryName;
