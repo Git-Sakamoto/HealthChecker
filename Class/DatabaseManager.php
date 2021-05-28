@@ -29,6 +29,16 @@ class DatabaseManager
     public $food_kcal = 'kcal'; //100gあたりのカロリー
     public $food_protein = 'protein'; //100gあたりのたんぱく質
 
+    //bmiテーブル
+    public $bmi_table = 'bmi';
+    public $bmi_gender = 'gender'; //性別
+    public $bmi_min_age = 'min_age'; //下限年齢
+    public $bmi_max_age = 'max_age'; //上限年齢
+    public $bmi_total = 'total'; //総人数
+    public $bmi_skinny = 'skinny'; //痩せている体型の人の数
+    public $bmi_normal = 'normal'; //普通体型の人の数
+    public $bmi_obesity = 'obesity'; //肥満体型の人の数
+
     //userテーブル
     public $user_table = 'user';
     public $user_user_name = 'user_name';
@@ -386,6 +396,27 @@ class DatabaseManager
         $sth->bindValue(1,$foodId);
         
         return $sth->execute();
+    }
+
+    public function selectBmi($gender,$age)
+    {
+        $sql = "
+        SELECT *
+        FROM $this->bmi_table
+        WHERE $this->bmi_gender = ?
+        AND $this->bmi_min_age = (
+        SELECT MAX($this->bmi_min_age)
+        FROM $this->bmi_table
+        WHERE $this->bmi_min_age <= ?);
+        ";
+        $dbh = $this->openDB();
+        $sth = $dbh->prepare($sql);
+
+        $sth->bindValue(1,$gender);
+        $sth->bindValue(2,$age);
+
+        $sth->execute();
+        return $sth->fetch(PDO::FETCH_ASSOC);
     }
 
     public function userSearch($userName, $password)
