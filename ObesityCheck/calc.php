@@ -9,7 +9,20 @@ function calcBmi($cmHeight, $weight)
 {
     //BMI ＝ 体重kg ÷ (身長m)2
     $mHeight = $cmHeight / 100;
-    return $weight / ($mHeight * $mHeight);
+    $result = $weight / ($mHeight * $mHeight);
+    return round($result, 2);
+}
+
+function calcPercentage($total, $subtotal)
+{
+    $result = $subtotal / $total * 100;
+    return round($result, 1);
+}
+
+function calcSuitableWeight($cmHeight){
+    $mHeight = $cmHeight / 100;
+    $result = ($mHeight * $mHeight) * 22;
+    return round($result, 2);
 }
 ?>
 <html>
@@ -30,6 +43,8 @@ function calcBmi($cmHeight, $weight)
         
         <p>
         厚生労働省が公開している<a href="https://www.mhlw.go.jp/bunya/kenkou/eiyou/dl/h27-houkoku-05.pdf">身体状況調査の結果</a>を元に、簡易的に肥満の検査をします
+        <br>
+        <b>※15歳以上限定</b>
         </p>
         
         <form method="post" action="calc.php">
@@ -38,9 +53,9 @@ function calcBmi($cmHeight, $weight)
             <input type="radio" name="gender" value="<?php echo GENDER_MAN; ?>" checked="checked">男
             <input type="radio" name="gender" value="<?php echo GENDER_WOMAN; ?>">女
             </p>
-            <p>年齢：<input type="number" name="age" required>歳</p>
-            <p>身長：<input type="number" step="0.1" name="height" required>cm</p>
-            <p>体重：<input type="number" step="0.1" name="bodyWeight" required>kg</p>
+            <p>年齢：<input type="number" min="15" name="age" required>歳</p>
+            <p>身長：<input type="number" step="0.1" min="1" name="height" required>cm</p>
+            <p>体重：<input type="number" step="0.1" min="1" name="weight" required>kg</p>
             <input type="submit" value="計算" class="btn btn-outline-primary">
             <input type="reset" value="クリア" class="btn btn-outline-primary">
         </form>
@@ -69,27 +84,52 @@ function calcBmi($cmHeight, $weight)
             ?>
             
             <div class="smallTitle">BMI</div>
+            <table class="table">
+                <?php
+                if($maxAge == 0){
+                    echo '<b>'.$minAge.'歳以上　'.$displayGender.'の調査結果</b>';
+                }else{
+                    echo '<b>'.$minAge.'歳～'.$maxAge.'歳　'.$displayGender.'の調査結果</b>';
+                }
+                ?>
+                <br>
+                総数：<?php echo $total; ?>人
+                <thead>
+                    <tr>
+                        <th style="width: 40%" scope="col">体型</th>
+                        <th style="width: 30%" scope="col">人数</th>
+                        <th style="width: 30%" scope="col">割合</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>やせ（BMI18.5未満）</td>
+                        <td><?php echo $skinny; ?>人</td>
+                        <td><?php echo calcPercentage($total, $skinny); ?>%</td>
+                    </tr>
+                    <tr>
+                        <td>普通（BMI18.5以上、25未満）</td>
+                        <td><?php echo $normal; ?>人</td>
+                        <td><?php echo calcPercentage($total, $normal); ?>%</td>
+                    </tr>
+                    <tr>
+                        <td>肥満（BMI25以上）</td>
+                        <td><?php echo $obesity; ?>人</td>
+                        <td><?php echo calcPercentage($total, $obesity); ?>%</td>
+                    </tr>
+                </tbody>
+            </table>
 
             <p>
-            <?php
-            if($maxAge == 0){
-                echo $minAge.'歳以上　'.$displayGender.'の調査結果';
-            }else{
-                echo $minAge.'歳～'.$maxAge.'歳　'.$displayGender.'の調査結果';
-            }
-            ?>
+            <b>あなたの情報</b>
             <br>
-            総数：<?php echo $total; ?>人
+            身長：<?php echo $height; ?>cm
             <br>
-            やせ（BMI18.5未満）：<?php echo $skinny; ?>人（<?php $total / $skinny; ?>%）
+            体重：<?php echo $weight; ?>kg
             <br>
-            普通（BMI18.5以上、25未満）：<?php echo $normal; ?>人（<?php $total / $normal; ?>%）
+            BMI：<?php echo calcBmi($height, $weight); ?>
             <br>
-            肥満（BMI25以上）：<?php echo $obesity; ?>人（<?php $total / $obesity; ?>%）
-            </p>
-
-            <p>
-            あなたのBMI：<?php calcBmi($height, $weight); ?>
+            適正体重（BMI22）：<?php echo calcSuitableWeight($height); ?>kg
             </p>
         <?php endif; ?>
     </div>
