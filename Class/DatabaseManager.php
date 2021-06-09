@@ -38,6 +38,15 @@ class DatabaseManager
     public $bmi_skinny = 'skinny'; //痩せている体型の人の数
     public $bmi_normal = 'normal'; //普通体型の人の数
     public $bmi_obesity = 'obesity'; //肥満体型の人の数
+    public $bmi_bmi_average = 'bmi_average'; //平均BMI
+
+    //abdominalテーブル
+    public $abdominal_table = 'abdominal';
+    public $abdominal_gender = 'gender';
+    public $abdominal_min_age = 'min_age';
+    public $abdominal_max_age = 'max_age';
+    public $abdominal_abdominal_top = 'abdominal_top';
+    public $abdominal_abdominal_average = 'abdominal_average';
 
     //userテーブル
     public $user_table = 'user';
@@ -408,6 +417,27 @@ class DatabaseManager
         SELECT MAX($this->bmi_min_age)
         FROM $this->bmi_table
         WHERE $this->bmi_min_age <= ?);
+        ";
+        $dbh = $this->openDB();
+        $sth = $dbh->prepare($sql);
+
+        $sth->bindValue(1,$gender);
+        $sth->bindValue(2,$age);
+
+        $sth->execute();
+        return $sth->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function selectAbdominal($gender,$age)
+    {
+        $sql = "
+        SELECT *
+        FROM $this->abdominal_table
+        WHERE $this->abdominal_gender = ?
+        AND $this->abdominal_min_age = (
+        SELECT MAX($this->abdominal_min_age)
+        FROM $this->abdominal_table
+        WHERE $this->abdominal_min_age <= ?);
         ";
         $dbh = $this->openDB();
         $sth = $dbh->prepare($sql);

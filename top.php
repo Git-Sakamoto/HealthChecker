@@ -14,6 +14,7 @@
         <h2><a href="Diet/calc.php">ダイエット計算機</a></h2>
         <h2><a href="Food/list.php">食品リスト</a></h2>
         <h2><a href="ObesityCheck/calc.php">肥満チェック</a></h2>
+        <h2><a href="Contact/form.php">お問い合わせ</a></h2>
     </div>
 </body>
 </html>

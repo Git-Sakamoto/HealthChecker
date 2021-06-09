@@ -44,7 +44,7 @@ function calcSuitableWeight($cmHeight){
         <p>
         厚生労働省が公開している<a href="https://www.mhlw.go.jp/bunya/kenkou/eiyou/dl/h27-houkoku-05.pdf">身体状況調査の結果</a>を元に、簡易的に肥満の検査をします
         <br>
-        <b>※15歳以上限定</b>
+        <b>※使用データの都合上、15歳以上限定</b>
         </p>
         
         <form method="post" action="calc.php">
@@ -73,7 +73,9 @@ function calcSuitableWeight($cmHeight){
             }else{
                 $displayGender = '女性';
             }
-            
+            ?>
+
+            <?php
             $row = $databaseManager->selectBmi($gender, $age);  
             $minAge = $row[$databaseManager->bmi_min_age];
             $maxAge = $row[$databaseManager->bmi_max_age];
@@ -81,8 +83,8 @@ function calcSuitableWeight($cmHeight){
             $skinny = $row[$databaseManager->bmi_skinny];
             $normal = $row[$databaseManager->bmi_normal];
             $obesity = $row[$databaseManager->bmi_obesity];
-            ?>
-            
+            $bmiAverage = $row[$databaseManager->bmi_bmi_average];
+            ?>       
             <div class="smallTitle">BMI</div>
             <table class="table">
                 <?php
@@ -94,6 +96,8 @@ function calcSuitableWeight($cmHeight){
                 ?>
                 <br>
                 総数：<?php echo $total; ?>人
+                <br>
+                平均BMI：<?php echo $bmiAverage; ?>
                 <thead>
                     <tr>
                         <th style="width: 40%" scope="col">体型</th>
@@ -130,6 +134,35 @@ function calcSuitableWeight($cmHeight){
             BMI：<?php echo calcBmi($height, $weight); ?>
             <br>
             適正体重（BMI22）：<?php echo calcSuitableWeight($height); ?>kg
+            <br>
+            <b>（BMI22は、統計上最も健康的な数値と言われています）</b>
+            </p>
+
+            
+            <?php
+            $row = $databaseManager->selectAbdominal($gender, $age);
+            $minAge = $row[$databaseManager->abdominal_min_age];
+            $maxAge = $row[$databaseManager->abdominal_max_age];
+            $abdominalTop = $row[$databaseManager->abdominal_abdominal_top];
+            $abdominalAverage = $row[$databaseManager->abdominal_abdominal_average];
+            ?>
+            <div class="smallTitle">腹囲</div>
+            <p>
+            <?php
+            if($maxAge == 0){
+                echo '<b>'.$minAge.'歳以上　'.$displayGender.'の腹囲</b>';
+            }else{
+                echo '<b>'.$minAge.'歳～'.$maxAge.'歳　'.$displayGender.'の腹囲</b>';
+            }
+            ?>
+            <br>
+            一番多かった太さの範囲：<?php echo $abdominalTop; ?>cm
+            <br>
+            平均：<?php echo $abdominalAverage; ?>cm
+            <br>
+            <b>（年代別の腹囲の分布から、上位3位の範囲の中間の値を合算し、割った数値を平均としています）</b>
+            <br>
+            <b>※腹部の太さは身長によって変わるため、目安程度にしてください</b>
             </p>
         <?php endif; ?>
     </div>
