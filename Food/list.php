@@ -25,7 +25,7 @@ $databaseManager = new DatabaseManager();
                 <table class="table">
                     <thead>
                         <tr>
-                            <th scope="col">食品名</th>
+                            <th scope="col" style="width: 40%">食品名</th>
                             <th scope="col">エネルギー</th>
                             <th scope="col">たんぱく質</th>
                         </tr>

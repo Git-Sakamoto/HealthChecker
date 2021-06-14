@@ -48,14 +48,40 @@ function calcSuitableWeight($cmHeight){
         </p>
         
         <form method="post" action="calc.php">
-            <p>
-            性別：
-            <input type="radio" name="gender" value="<?php echo GENDER_MAN; ?>" checked="checked">男
-            <input type="radio" name="gender" value="<?php echo GENDER_WOMAN; ?>">女
-            </p>
-            <p>年齢：<input type="number" min="15" name="age" required>歳</p>
-            <p>身長：<input type="number" step="0.1" min="1" name="height" required>cm</p>
-            <p>体重：<input type="number" step="0.1" min="1" name="weight" required>kg</p>
+            <fieldset class="row mb-3">
+                <legend class="col-form-label col-sm-1 pt-0">性別</legend>
+                <div class="col-sm-10">
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="gender" id="radioMan" value="<?php echo GENDER_MAN; ?>" checked="checked">
+                    <label class="form-check-label" for="radioMan">男</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="gender" id="radioWoman" value="<?php echo GENDER_WOMAN; ?>">
+                    <label class="form-check-label" for="radioWoman">女</label>
+                </div>
+            </fieldset>
+
+            <div class="row mb-3">
+                <label class="col-sm-1 col-form-label">年齢</label>
+                <div class="col-sm-2">
+                    <input class="form-control" type="number" min="15" name="age" required>
+                </div>
+            </div>
+            
+            <div class="row mb-3">
+                <label class="col-sm-1 col-form-label">身長（cm）</label>
+                <div class="col-sm-2">
+                    <input class="form-control" type="number" step="0.1" min="1" name="height" required>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label class="col-sm-1 col-form-label">体重（kg）</label>
+                <div class="col-sm-2">
+                    <input class="form-control" type="number" step="0.1" min="1" name="weight" required>
+                </div>
+            </div>
+
             <input type="submit" value="計算" class="btn btn-outline-primary">
             <input type="reset" value="クリア" class="btn btn-outline-primary">
         </form>
@@ -86,6 +112,7 @@ function calcSuitableWeight($cmHeight){
             $bmiAverage = $row[$databaseManager->bmi_bmi_average];
             ?>       
             <div class="smallTitle">BMI</div>
+            <p>BMIとは、体重（kg）÷身長（ｍ）÷身長（m）の計算式で肥満度の確認に使用される指数です</p>
             <table class="table">
                 <?php
                 if($maxAge == 0){
@@ -147,6 +174,7 @@ function calcSuitableWeight($cmHeight){
             $abdominalAverage = $row[$databaseManager->abdominal_abdominal_average];
             ?>
             <div class="smallTitle">腹囲</div>
+            <p>腹囲とは、へそのラインで測った時の長さです</p>
             <p>
             <?php
             if($maxAge == 0){

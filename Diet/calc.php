@@ -52,15 +52,47 @@ function calcActionKcal($mets, $bodyWeight, $time)
             7200kcal/脂肪1kgの消費に必要なカロリー
         </p>
         <form method="post" action="calc.php">
-            <p>
-                性別：
-                <input type="radio" name="gender" value="<?php echo GENDER_MAN; ?>" checked="checked">男
-                <input type="radio" name="gender" value="<?php echo GENDER_WOMAN; ?>">女
-            </p>
-            <p>年齢：<input type="number" name="age" required>歳</p>
-            <p>身長：<input type="number" step="0.1" name="height" required>cm</p>
-            <p>体重：<input type="number" step="0.1" name="bodyWeight" required>kg</p>
-            <p>消費脂肪量：<input type="number" step="0.1" name="fatWeight" required>kg</p>
+            <fieldset class="row mb-3">
+                <legend class="col-form-label col-sm-1 pt-0">性別</legend>
+                <div class="col-sm-10">
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="gender" id="radioMan" value="<?php echo GENDER_MAN; ?>" checked="checked">
+                    <label class="form-check-label" for="radioMan">男</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="gender" id="radioWoman" value="<?php echo GENDER_WOMAN; ?>">
+                    <label class="form-check-label" for="radioWoman">女</label>
+                </div>
+            </fieldset>
+
+            <div class="row mb-3">
+                <label class="col-sm-1 col-form-label">年齢</label>
+                <div class="col-sm-2">
+                    <input class="form-control" type="number" min="15" name="age" required>
+                </div>
+            </div>
+            
+            <div class="row mb-3">
+                <label class="col-sm-1 col-form-label">身長（cm）</label>
+                <div class="col-sm-2">
+                    <input class="form-control" type="number" step="0.1" min="1" name="height" required>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label class="col-sm-1 col-form-label">体重（kg）</label>
+                <div class="col-sm-2">
+                    <input class="form-control" type="number" step="0.1" min="1" name="bodyWeight" required>
+                </div>
+            </div>
+            
+            <div class="row mb-3">
+                <label class="col-sm-1 col-form-label">消費脂肪量（kg）</label>
+                <div class="col-sm-2">
+                    <input class="form-control" type="number" step="0.1" min="1" name="fatWeight" required>
+                </div>
+            </div>
+
             <input type="submit" value="計算" class="btn btn-outline-primary">
             <input type="reset" value="クリア" class="btn btn-outline-primary">
         </form>

@@ -30,19 +30,27 @@ $databaseManager = new DatabaseManager();
         
         <div class="container">
             <div class="smallTitle">たんぱく質計算機</div>
-            <p>
-                体重、運動レベルに応じて、1日に必要なたんぱく質量を計算します
-            </p>
+            <p>体重、運動レベルに応じて、1日に必要なたんぱく質量を計算します</p>
+
             <form method="post" action="calc.php">
-                <p>体重：<input type="number" step="0.1" name="weight" required>kg</p>
-                <p>
-                    運動レベル：
-                    <select name="level">
-                        <?php foreach($proteinArray as $level=>$protein) : ?>
-                            <option value = <?php echo $level ?>><?php echo $protein->getName(); ?></option>
-                        <?php endforeach; ?>
-                    </select>
-                </p>
+                <div class="row mb-3">
+                    <label class="col-sm-1 col-form-label">体重（kg）</label>
+                    <div class="col-sm-2">
+                        <input class="form-control" type="number" step="0.1" min="1" name="weight" required>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label class="col-sm-1 col-form-label">運動レベル</label>
+                    <div class="col-sm-auto">
+                        <select class="form-select" name="level">
+                            <?php foreach($proteinArray as $level=>$protein) : ?>
+                                <option value = <?php echo $level ?>><?php echo $protein->getName(); ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                </div>
+
                 <input type="submit" value="計算" class="btn btn-outline-primary">
                 <input type="reset" value="クリア" class="btn btn-outline-primary">
             </form>
